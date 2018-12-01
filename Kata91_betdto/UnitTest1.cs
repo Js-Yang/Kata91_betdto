@@ -28,9 +28,17 @@ namespace Kata91_betdto
             Assert.AreEqual("20181201", actual.Date);
         }
 
+        [TestMethod]
+        public void Convert_To_BetDto_Check_Field_Name()
+        {
+            var actual = BetConverter.ConvertFromFieldName(GenerateBet());
+            
+            Assert.AreEqual("JE", actual.Status);
+        }
+
         private static Bet GenerateBet()
         {
-            return new Bet() { Id = 123, CreatedTime = new DateTime(2018, 12, 1), Stake = 100 };
+            return new Bet() { Id = 123, CreatedTime = new DateTime(2018, 12, 1), Stake = 100,Status = "JE"};
         }
 
         private static Func<Bet, BetDto> ConvertRule()
@@ -52,6 +60,7 @@ namespace Kata91_betdto
         public int Id { get; set; }
         public decimal Stake { get; set; }
         public DateTime CreatedTime { get; set; }
+        public string Status { get; set; }
     }
 
     public class BetConverter
@@ -65,6 +74,11 @@ namespace Kata91_betdto
         {
             return mapper.Mapping(bet);
         }
+
+        public BetDto ConvertFromFieldName(Bet generateBet)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public interface IBetMapper<TSource, TResult>
@@ -77,5 +91,6 @@ namespace Kata91_betdto
         public int BetId { get; set; }
         public string Date { get; set; }
         public int Amount { get; set; }
+        public string Status { get; set; }
     }
 }
